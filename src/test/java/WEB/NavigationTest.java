@@ -108,10 +108,12 @@ public class NavigationTest {
 
         pom_for_registration.safeClick(POM_FOR_NAVIGATION.SAUCES_TAB);
 
-        WebElement saucesTab = wait.until(ExpectedConditions.visibilityOfElementLocated(
-                By.xpath("//span[text()='Соусы']")));
-        assertTrue(saucesTab.findElement(By.xpath("//h2[contains(text(), 'Соусы')]"))
-                .isDisplayed());
+        WebElement activeSaucesTab = wait.until(ExpectedConditions.elementToBeClickable(POM_FOR_NAVIGATION.SAUCES_TAB));
+        assertTrue(activeSaucesTab.getAttribute("class").contains("tab_tab_type_current"));
+
+        WebElement saucesHeader = wait.until(ExpectedConditions.visibilityOfElementLocated(
+                By.xpath("//h2[contains(text(), 'Соусы')]")));
+        assertTrue(saucesHeader.isDisplayed());
     }
     @Test
     @DisplayName("Переход в раздел Начинки")
