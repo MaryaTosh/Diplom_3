@@ -1,12 +1,11 @@
 package WEB;
-
 import org.junit.jupiter.api.*;
 import org.openqa.selenium.*;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
+import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
-
 import java.time.Duration;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -16,7 +15,6 @@ public class NavigationTest {
     private WebDriver driver;
     private WebDriverWait wait;
     private POM_FOR_REGISTRATION pom_for_registration;
-    private POM_FOR_NAVIGATION pom_for_navigation;
 
     @BeforeEach
     public void setUp() {
@@ -35,7 +33,6 @@ public class NavigationTest {
         }
         wait = new WebDriverWait(driver, Duration.ofSeconds(10));
         pom_for_registration = new POM_FOR_REGISTRATION(driver);
-        pom_for_navigation = new POM_FOR_NAVIGATION(driver);
         driver.manage().window().maximize();
         driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(0));
         driver.get("https://stellarburgers.education-services.ru/");
@@ -92,15 +89,13 @@ public class NavigationTest {
     void shouldNavigateToBunsTab() {
         pom_for_registration.login();
 
-        // Кликаем вкладку "Булки"
         pom_for_registration.safeClick(POM_FOR_NAVIGATION.BUNS_TAB);
 
-        // Проверяем активную вкладку Булки
-        WebElement bunsTab = wait.until(ExpectedConditions.elementToBeClickable(
-                By.xpath("//span[text()='Булки']")));
-        assertTrue(bunsTab.findElement(By.xpath("//h2[contains(text(), 'Булки')]"))
-                .isDisplayed());
+        WebElement bunsTab = wait.until(ExpectedConditions.visibilityOfElementLocated(
+                POM_FOR_NAVIGATION.BUNS_TAB));
+        assertTrue(bunsTab.getAttribute("class").contains("tab_tab_type_current"));
     }
+
     @Test
     @DisplayName("Переход в раздел Соусы")
     void shouldNavigateToSaucesTab() {
@@ -108,13 +103,11 @@ public class NavigationTest {
 
         pom_for_registration.safeClick(POM_FOR_NAVIGATION.SAUCES_TAB);
 
-        WebElement activeSaucesTab = wait.until(ExpectedConditions.elementToBeClickable(POM_FOR_NAVIGATION.SAUCES_TAB));
-        assertTrue(activeSaucesTab.getAttribute("class").contains("tab_tab_type_current"));
-
-        WebElement saucesHeader = wait.until(ExpectedConditions.visibilityOfElementLocated(
-                By.xpath("//h2[contains(text(), 'Соусы')]")));
-        assertTrue(saucesHeader.isDisplayed());
+        WebElement saucesTab = wait.until(ExpectedConditions.visibilityOfElementLocated(
+                POM_FOR_NAVIGATION.SAUCES_TAB));
+        assertTrue(saucesTab.getAttribute("class").contains("tab_tab_type_current"));
     }
+
     @Test
     @DisplayName("Переход в раздел Начинки")
     void shouldNavigateToFillingsTab() {
@@ -123,11 +116,9 @@ public class NavigationTest {
         pom_for_registration.safeClick(POM_FOR_NAVIGATION.FILLINGS_TAB);
 
         WebElement fillingsTab = wait.until(ExpectedConditions.visibilityOfElementLocated(
-                By.xpath("//span[text()='Начинки']")));
-        assertTrue(fillingsTab.findElement(By.xpath("//h2[contains(text(), 'Начинки')]"))
-                .isDisplayed());
+                POM_FOR_NAVIGATION.FILLINGS_TAB));
+        assertTrue(fillingsTab.getAttribute("class").contains("tab_tab_type_current"));
     }
-
     @Test
     @DisplayName("выход по кнопке «Выйти» в личном кабинете")
     void shouldOutFromProfile() {
@@ -142,4 +133,4 @@ public class NavigationTest {
         assertEquals("Войти", loginButton.getText());
     }
 
-    }
+}
