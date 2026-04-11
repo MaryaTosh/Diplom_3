@@ -16,7 +16,6 @@ public class LoginTest {
     private POM_FOR_REGISTRATION pom;
     private final String validEmail = "cucumber66@gmail.com";
     private final String validPassword = "cucumber66";
-    private final String validName = "cucumber66";
 
     @BeforeEach
     public void setUp() {
@@ -67,7 +66,6 @@ public class LoginTest {
         pom.safeClear(passwordField);
         passwordField.sendKeys(validPassword);
 
-        // 4. Войти → главная
         pom.safeClick(POM_FOR_REGISTRATION.LOGIN_BUTTON);
         wait.until(ExpectedConditions.urlContains("/"));
 
@@ -94,7 +92,6 @@ void LoginFromButtonLogInAccount() {
         pom.safeClear(passwordField);
         passwordField.sendKeys(validPassword);
 
-        // 4. Войти → главная
         pom.safeClick(POM_FOR_REGISTRATION.LOGIN_BUTTON);
         wait.until(ExpectedConditions.urlContains("/"));
 

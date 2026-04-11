@@ -16,8 +16,5 @@ public class POM_FOR_NAVIGATION {
     }
     public static final By CONSTRUCTOR_BUTTON = By.xpath("//p[contains(text(), 'Конструктор')]");
     public static final By STELLAR_LOGO = By.xpath("//svg[@width='290' and @height='50']");
-    public static final By BUNS_TAB     = By.xpath("//span[text()='Булки']");
-    public static final By SAUCES_TAB   = By.xpath("//span[text()='Соусы']");
-    public static final By FILLINGS_TAB = By.xpath("//span[text()='Начинки']");
     public static final By BUTTON_OUT = By.xpath("//button[contains(text(), 'Выход')]");
 }

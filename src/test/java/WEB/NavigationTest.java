@@ -89,11 +89,11 @@ public class NavigationTest {
     void shouldNavigateToBunsTab() {
         pom_for_registration.login();
 
-        pom_for_registration.safeClick(POM_FOR_NAVIGATION.BUNS_TAB);
+        By bunsTabLocator = By.xpath(".//span[text()='Булки']/..");
+        driver.findElement(bunsTabLocator).click();
 
-        WebElement bunsTab = wait.until(ExpectedConditions.visibilityOfElementLocated(
-                POM_FOR_NAVIGATION.BUNS_TAB));
-        assertTrue(bunsTab.getAttribute("class").contains("tab_tab_type_current"));
+        String classValue = driver.findElement(bunsTabLocator).getAttribute("class");
+        assertTrue(classValue.contains("tab_tab_type_current"));
     }
 
     @Test
@@ -101,24 +101,26 @@ public class NavigationTest {
     void shouldNavigateToSaucesTab() {
         pom_for_registration.login();
 
-        pom_for_registration.safeClick(POM_FOR_NAVIGATION.SAUCES_TAB);
+        By saucesTabLocator = By.xpath(".//span[text()='Соусы']/..");
+        driver.findElement(saucesTabLocator).click();
 
-        WebElement saucesTab = wait.until(ExpectedConditions.visibilityOfElementLocated(
-                POM_FOR_NAVIGATION.SAUCES_TAB));
-        assertTrue(saucesTab.getAttribute("class").contains("tab_tab_type_current"));
+        String classValue = driver.findElement(saucesTabLocator).getAttribute("class");
+        assertTrue(classValue.contains("tab_tab_type_current"));
     }
+
 
     @Test
     @DisplayName("Переход в раздел Начинки")
     void shouldNavigateToFillingsTab() {
         pom_for_registration.login();
 
-        pom_for_registration.safeClick(POM_FOR_NAVIGATION.FILLINGS_TAB);
+        By fillingsTabLocator = By.xpath(".//span[text()='Начинки']/..");
+        driver.findElement(fillingsTabLocator).click();
 
-        WebElement fillingsTab = wait.until(ExpectedConditions.visibilityOfElementLocated(
-                POM_FOR_NAVIGATION.FILLINGS_TAB));
-        assertTrue(fillingsTab.getAttribute("class").contains("tab_tab_type_current"));
+        String classValue = driver.findElement(fillingsTabLocator).getAttribute("class");
+        assertTrue(classValue.contains("tab_tab_type_current"));
     }
+
     @Test
     @DisplayName("выход по кнопке «Выйти» в личном кабинете")
     void shouldOutFromProfile() {

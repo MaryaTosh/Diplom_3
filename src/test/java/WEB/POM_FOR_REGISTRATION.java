@@ -15,7 +15,6 @@ public class POM_FOR_REGISTRATION {
     private WebDriverWait wait;
     private final String validEmail = "cucumber66@gmail.com";
     private final String validPassword = "cucumber66";
-    private final String validName = "cucumber66";
 
     public POM_FOR_REGISTRATION(WebDriver driver) {
         this.driver = driver;
