@@ -1,5 +1,6 @@
 package WEB;
 
+import io.qameta.allure.Step;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
@@ -8,6 +9,8 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.time.Duration;
+
+import static io.restassured.RestAssured.given;
 
 
 public class POM_FOR_REGISTRATION {
@@ -20,7 +23,7 @@ public class POM_FOR_REGISTRATION {
         this.driver = driver;
         this.wait = new WebDriverWait(driver, Duration.ofSeconds(20));
     }
-
+    private static final String USER_BASE_PATH_DELETE = "/api/auth/user";
     public static final By REGISTER_BUTTON = By.xpath("//button[text()='Зарегистрироваться']");
     public static final By PROFILE_BUTTON = By.xpath("(//a[contains(@class, 'AppHeader_header__link')])[3]");
     public static final By EMAIL_FIELD_REGISTRATION = By.xpath("(//input[contains(@class, 'input__textfield')])[2]");
@@ -67,5 +70,14 @@ public class POM_FOR_REGISTRATION {
         wait.until(ExpectedConditions.elementToBeClickable(
                 By.xpath("//button[contains(text(), 'Оформить заказ')]")));
 
+    }
+    @Step("Удалить пользователя по токену")
+    public static void deleteUser(String token) {
+        if (token != null) {
+            given()
+                    .header("Authorization", "Bearer " + token)
+                    .when()
+                    .delete(USER_BASE_PATH_DELETE);
+        }
     }
 }

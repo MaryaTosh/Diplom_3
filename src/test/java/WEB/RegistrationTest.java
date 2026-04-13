@@ -2,6 +2,7 @@ package WEB;
 
 import org.junit.jupiter.api.*;
 import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
@@ -23,6 +24,7 @@ public class RegistrationTest {
     private String validEmail = "cucumber66@gmail.com";
     private String validPassword = "cucumber66";
     private String validName = "cucumber66";
+    private String token;
 
     @BeforeEach
     public void setUp() {
@@ -52,6 +54,9 @@ public class RegistrationTest {
 
     @AfterEach
     public void tearDown() {
+        if (token != null) {
+            POM_FOR_REGISTRATION.deleteUser(token);
+        }
         if (driver != null) {
             driver.quit();
         }
@@ -86,7 +91,10 @@ public class RegistrationTest {
         pom.safeClick(POM_FOR_REGISTRATION.LOGIN_BUTTON);
         wait.until(ExpectedConditions.elementToBeClickable(
                 By.xpath("//button[contains(text(), 'Оформить заказ')]")));
-
+        token = ((JavascriptExecutor) driver)
+                .executeScript("return window.localStorage.getItem('accessToken');")
+                .toString()
+                .replace("Bearer ", "");
     }
 
     @Test
