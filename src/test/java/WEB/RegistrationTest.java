@@ -7,12 +7,14 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
+import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.time.Duration;
 import java.util.Random;
 
+import static io.restassured.RestAssured.given;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 
@@ -54,8 +56,18 @@ public class RegistrationTest {
 
     @AfterEach
     public void tearDown() {
-        if (token != null) {
-            POM_FOR_REGISTRATION.deleteUser(token);
+        if (token != null && !token.isEmpty()) {
+            try {
+                String deleteUrl = "https://stellarburgers.education-services.ru/api/auth/user";
+                given()
+                        .header("Authorization", "Bearer " + token)
+                        .when()
+                        .delete(deleteUrl)
+                        .then()
+                        .statusCode(202);
+            } catch (Exception e) {
+                System.err.println("Не удалось удалить юзера: " + e.getMessage() + ". Тест продолжается.");
+            }
         }
         if (driver != null) {
             driver.quit();
